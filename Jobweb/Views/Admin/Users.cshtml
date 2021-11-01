@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Jobweb.Models.Usuario>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Usuarios</h2>
+
+<table class="table table-hover" style="margin-top: 20px;">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipo)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "EditUser", new { id = item.id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Eliminar", "DeleteUser", new { id = item.id }, new { @class = "btn btn-danger aDelete" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        $(".aDelete").click(function (event) {
+            if (!confirm('¿Esta seguro que desea eliminar?')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+}

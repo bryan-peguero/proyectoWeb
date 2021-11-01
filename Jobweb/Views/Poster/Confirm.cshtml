@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Confirmacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Confirmacion</h2>
+
+<div class="container">
+    <span class="text-danger h5">@ViewBag.error</span>
+    <form class="form-group row cols-12" method="post" action="~/Poster/PostAJob">
+            <div class="col-6">
+        <span class="h4">Puesto de trabajo</span>
+        <hr />
+
+        <div class="form-group">
+            <label for="tipo">Tipo de trabajo</label>
+            <select class="form-control" name="tipo" id="tipo" placeholder="" required readonly>
+                <option value="@ViewBag.puesto.tipo">@ViewBag.puesto.tipo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="posicion">Posicion</label>
+            <input readonly class="form-control" name="posicion" id="posicion" placeholder="Escriba una posicion de trabajo" required value="@ViewBag.puesto.posicion" />
+        </div>
+        <div class="form-group">
+            <input readonly class="form-control" name="idCompañia" hidden required value="@ViewBag.puesto.idCompañia" />
+        </div>
+        <div class="form-group">
+            <label for="ubicacion">Ubicacion</label>
+            <input readonly class="form-control" name="ubicacion" id="ubicacion" placeholder="Escribe la ciudad del puesto de trabajo" required value="@ViewBag.puesto.ubicacion" />
+        </div>
+        <div class="form-group">
+            <label for="idCategoria">Categoria</label>
+            <select readonly class="form-control" name="idCategoria" id="idCategoria" placeholder="" required>
+                <option value="@ViewBag.puesto.idCategoria">@ViewBag.categoria</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripcion</label>
+            <textarea readonly class="form-control" name="descripcion" id="descripcion" placeholder="Escriba una descripcion del trabajo aqui" rows="3" required>@ViewBag.puesto.descripcion</textarea>
+        </div>
+        <div class="form-group">
+            <label for="aplicar">Como aplicar</label>
+            <textarea readonly class="form-control" name="aplicar" id="aplicar" placeholder="Escriba aplicar al puesto aqui" rows="3" required>@ViewBag.puesto.aplicar</textarea>
+        </div>
+        <div class="form-group">
+            <label for="fecha">Fecha de publicacion</label>
+            <input type="text" class="form-control" value="@ViewBag.puesto.fechaPublicacion" readonly/>
+        </div>
+            </div>
+            <div class="col-6">
+
+        <span class="h4">Compañia</span>
+        <hr />
+        <div class="form-group">
+            @{
+                string ruta = Server.MapPath("~");
+                ruta += "\\Assets\\" +  ViewBag.company.logo;
+                if (ViewBag.company.logo != null && (ViewBag.company.logo.Contains("jpg") || ViewBag.company.logo.Contains("png")) && File.Exists(ruta))
+                {
+
+                    <img src="~/Assets/@ViewBag.company.logo" class="card-img" style="max-height: 100px; max-width: 100px;">
+                }
+                else
+                {
+                    <img src="~/Assets/placeholder.png" class="card-img" style="max-height: 100px; max-width: 100px;">
+                }
+            }
+
+            <label for="logo" class="h4">Logo de la companñia</label>
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input readonly type="text" name="nombre" id="nombre" value="@ViewBag.company.nombre" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="url">Pagina de la compañia</label>
+            <input readonly type="text" name="url" value="@ViewBag.company.url" id="url" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="email">Correo electronico</label>
+            <input readonly type="email" name="email" value="@ViewBag.company.email" id="email" class="form-control" />
+        </div>
+            </div>
+           <div class="w-100 d-flex justify-content-end">
+
+            <a href="~/Poster/PostAJob" class=" btn btn-outline-secondary mr-2">Cancelar</a>
+            <button type="submit" class=" btn btn-outline-success">Confirmar</button>
+           </div>
+    </form>
+</div>
+
+

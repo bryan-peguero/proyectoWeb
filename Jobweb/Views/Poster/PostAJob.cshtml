@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Post a Job";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Post A Job</h2>
+
+<div class="container">
+    
+    <span class="text-danger h5">@ViewBag.error</span>
+    <form class="form-group" method="post" action="~/Poster/Confirm">
+        <div class="form-group">
+            <label for="tipo">Tipo de trabajo</label>
+            <select class="form-control" name="tipo" id="tipo" placeholder="" required>
+                <option value="">Selecciona un tipo de trabajo</option>
+                @{
+                    try
+                    {
+                        switch (ViewBag.tipo)
+                        {
+                            case "full-time":
+                                ViewBag.ft = "selected";
+                                break;
+                            case "part-time":
+                                ViewBag.pt = "selected";
+                                break;
+                            case "freelance":
+                                ViewBag.fl = "selected";
+                                break;
+                        }
+                    }
+                    catch { }
+
+                    }
+
+                }
+                <option value="full-time" @ViewBag.ft>Full-time</option>
+                <option value="part-time" @ViewBag.pt>Part-time</option>
+                <option value="freelance" @ViewBag.fl>Freelance</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="posicion">Posicion</label>
+            <input class="form-control" name="posicion" id="posicion" placeholder="Escriba una posicion de trabajo" required value="@ViewBag.posicion" />
+        </div>
+        <div class="form-group">
+            <label for="ubicacion">Ubicacion</label>
+            <input class="form-control" name="ubicacion" id="ubicacion" placeholder="Escribe la ciudad del puesto de trabajo" required value="@ViewBag.ubicacion" />
+        </div>
+        <div class="form-group">
+            <label for="idCategoria">Categoria</label>
+            <select class="form-control" name="categoria" id="idCategoria" placeholder="" required>
+                <option value="">Seleccion un categoria de trabajo</option>
+                @foreach (var categoria in ViewBag.categorias)
+                {
+
+                    if (categoria.disponibilidad == 1)
+                    {
+                        if (categoria.id == ViewBag.idCategoria)
+                        {
+                            ViewBag.ct = "selected";                           
+                        }
+                        <option value="@categoria.categoria&@categoria.id" @ViewBag.ct>@categoria.categoria</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripcion</label>
+            <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Escriba una descripcion del trabajo aqui" rows="3" required>@ViewBag.descripcion</textarea>
+        </div>
+        <div class="form-group">
+            <label for="aplicar">Como aplicar</label>
+            <textarea class="form-control" name="aplicar" id="aplicar" placeholder="Escriba aplicar al puesto aqui" rows="3" required>@ViewBag.aplicar</textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-info">Postear</button>
+
+    </form>
+</div>
+

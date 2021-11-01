@@ -1,0 +1,47 @@
+﻿@model Jobweb.Models.Listing
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-start" style="margin-bottom: 20px;">
+    <div class="col-sm">
+        @{ 
+            string ruta = Server.MapPath("~");
+            ruta += "\\Assets\\" + Model.logo;
+            if (Model.logo != null && (Model.logo.Contains("jpg") || Model.logo.Contains("png")) && File.Exists(ruta))
+            {
+            <img src="~/Assets/@Model.logo" style="max-height: 100px; max-width: 100px;">
+            }
+            else
+            {
+            <img src="~/Assets/placeholder.png" style="max-height: 200px; max-width: 200px;">
+            }
+         }
+    </div>
+    <div class="col-8">
+        <h2>@Model.company</h2>
+        <h4>@Model.ubicacion</h4>
+        <hr />
+        <h3>@Model.posicion - @Model.tipo</h3>
+    </div>
+    <div class="col col-lg-1"></div>
+</div>
+
+<h3>Descripcion</h3>
+
+
+<p>
+    @Model.descripcion
+</p>
+
+<h4>¿Como aplicar?</h4>
+
+<span style="margin-top: 10px;"><strong>Email: </strong>@Model.email</span>
+<br />
+<span style="margin-bottom: 10px;"><strong>Url: </strong>@Model.url</span>
+<p>
+    @Model.aplicar
+</p>
+

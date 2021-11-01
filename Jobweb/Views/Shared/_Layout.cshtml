@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title - Empleate</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm p-3 mb-5 bg-white sticky-top" id="homeNavBar">
+        <a class="navbar-brand" href="~/Home/Index">
+            @*<img src="../../assets/images/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">*@
+            Empleate
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "form-inline mx-auto" }))
+            {
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" name="search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            }
+            <div class="nav">
+                @{
+                    if (Session["User"] == null)
+                    {
+                        ViewBag.Action = "Log";
+                        ViewBag.atext = "Iniciar sesion";
+
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Jobweb.Models.Usuario usr = (Jobweb.Models.Usuario)Session["User"];
+                            usr.tipo = usr.tipo.ToLower();
+                            if (usr.tipo == "administrador")
+                            {
+                                <a class="nav-link btn btn-secondary" style="margin-right: 6px;" href="~/Admin/Dashboard">Dashboard</a>
+                                <a class="nav-link btn btn-primary" href="~/Poster/PostAJob">Post a Job</a>
+                            }
+                            else if (usr.tipo == "poster")
+                            {
+                                <a class="nav-link btn btn-primary" href="~/Poster/PostAJob">Post a Job</a>
+                            }
+                        }
+                        catch { }
+                        ViewBag.Action = "Logout";
+                        ViewBag.atext = "Cerrar sesion";
+                    }
+
+
+
+                }
+                <a class="nav-link" href="~/Home/@ViewBag.Action">@ViewBag.atext</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container" style="padding-top: 10px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Empleate</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

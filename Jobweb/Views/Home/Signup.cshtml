@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <span class="text-danger h3">@ViewBag.Error</span>
+    <form action="~/Home/Signup" class="form-group" method="post" enctype="multipart/form-data">
+        <span class="h4">Usuario</span>
+        <div class="form-group">
+
+            <label for="username">Nombre de usuario</label>
+            <input type="text" name="username" id="username" value="@ViewBag.user" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" value="" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="password2">Confirmar contraseña</label>
+            <input type="password" name="password2" id="password2" value="" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="tipo">Tipo</label>
+            <select name="tipo" id="tipo" required class="form-control" >
+                <option value="user" selected>User</option>
+                <option value="poster" >Poster</option>
+            </select>
+
+        </div>
+        <div class="text-right">
+            <hr />
+            <a href="#collapse-company" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-company">Formulario Company</a>
+        </div>
+        <div class="collapse" id="collapse-company">
+
+
+            <span class="h4">Compañia</span>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" value="@ViewBag.nombre" class="form-control" />
+            </div>
+            <div class="custom-file">
+                <label for="logo" class="custom-file-label">Selecciona un logo para la compañia</label>
+                <input type="file" accept=".jpg,.png" name="logoImg" value="" id="logo" class="custom-control-input">
+            </div>
+            <div class="form-group">
+                <label for="url">Pagina de la compañia</label>
+                <input type="text" name="url" value="@ViewBag.url" id="url" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="email">Correo electronico</label>
+                <input type="email" name="email" value="@ViewBag.correo" id="email" class="form-control" />
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Continuar</button>
+    </form>
+
+</div>
+

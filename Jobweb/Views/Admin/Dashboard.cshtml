@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Dashboard</h2>
+
+<div class="row row-cols-1 row-cols-md-2" style="margin-top:20px;">
+    <div class="col mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Puestos de trabajo Publicados</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">@Jobweb.Controllers.HomeController.GetListingCount().ToString()</p>
+            </div>
+        </div>
+    </div>
+    <div class="col mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Categorias activas</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">@Jobweb.Controllers.HomeController.GetCategoryCount().ToString()</p>
+            </div>
+        </div>
+    </div>
+</div>

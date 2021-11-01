@@ -1,0 +1,32 @@
+﻿
+@{ 
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container w-50">
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title h3">
+                Login
+            </span>
+        </div>
+        <div class="card-body">
+            <span class="text-danger h4">@ViewBag.Error</span>
+            <form class="form-group" method="post" action="~/Home/Log">
+                <div class="form-group">
+                    <label for="user">Nombre de usuario</label>
+                    <input type="text" class="form-control" name="user" id="user" placeholder="Escribe tu nombre de usuario" value="@ViewBag.username" required />
+                </div>
+                <div class="form-group">
+                    <label for="pass">Contraseña</label>
+                    <input type="password" class="form-control" name="pass" id="pass" placeholder="Escribe tu contraseña" required />
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Iniciar sesion</button>
+                    <a href="~/Home/Signup" class="btn btn-primary">Registrate</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>

@@ -1,0 +1,52 @@
+﻿@model Jobweb.Models.Search
+
+@{
+    ViewBag.Title = "Busqueda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row row-cols-1 row-cols-md-2">
+    @foreach (var item in Model.PaginatedBlogs())
+    {
+        <div class="col mb-4">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        @{
+                            string ruta = Server.MapPath("~");
+                            ruta += "\\Assets\\" + item.logo;
+                            if (item.logo != null && (item.logo.Contains("jpg") || item.logo.Contains("png")) && File.Exists(ruta))
+                            {
+                                <img src="~/Assets/@item.logo" class="card-img">
+                            }
+                            else
+                            {
+                                <img src="~/Assets/placeholder.png" class="card-img">
+                            }
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title">@Html.DisplayFor(modelItem => item.company)</h6>
+                            <h5 class="card-title"><a href="/Job?id=@item.id">@Html.DisplayFor(modelItem => item.posicion)</a></h5>
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.ubicacion)</p>
+                            <p class="card-text"><small class="text-muted">@Html.DisplayFor(modelItem => item.tipo)</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row h-100 justify-content-center align-items-center">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount(); i++)
+        {
+            <li class="@(i == Model.CurrentPage ? "page-item active" : "page-item")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+
+        }
+    </ul>
+</div>

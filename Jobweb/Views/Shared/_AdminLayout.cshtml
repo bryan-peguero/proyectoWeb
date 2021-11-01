@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title - Empleate</title>
+    <link rel="stylesheet" href="~/Content/Admin.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm p-3 bg-white sticky-top" id="homeNavBar">
+        <a class="navbar-brand" href="/">
+            @*<img src="../../assets/images/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">*@
+            Empleate
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "form-inline mx-auto" }))
+            {
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" name="search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            }
+            <div class="nav">
+                @{
+                    if (Session["User"] == null)
+                    {
+                        ViewBag.Action = "Log";
+                        ViewBag.atext = "Iniciar sesion";
+
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Jobweb.Models.Usuario usr = (Jobweb.Models.Usuario)Session["User"];
+                            usr.tipo = usr.tipo.ToLower();
+                            if (usr.tipo == "administrador")
+                            {
+                                <a class="nav-link btn btn-secondary" style="margin-right: 6px;" href="~/Admin/Dashboard">Dashboard</a>
+                            }
+                        }
+                        catch { }
+                        ViewBag.Action = "Logout";
+                        ViewBag.atext = "Cerrar sesion";
+                    }
+
+
+
+                }
+                <a class="nav-link" href="~/Home/@ViewBag.Action">@ViewBag.atext</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class=" d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        @if (HttpContext.Current.Request.RawUrl.Contains("Dashboard") == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/Admin/Dashboard">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Dashboard <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin/Dashboard">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Request.RawUrl.Contains("User") == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/Admin/Users">
+                                    <i class="fas fa-user"></i>
+                                    Usuarios <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin/Users">
+                                    <i class="fas fa-user"></i>
+                                    Usuarios
+                                </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Request.RawUrl.Contains("Categories") == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/Admin/Categories">
+                                    <i class="fas fa-bookmark"></i>
+                                    Categorias <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin/Categories">
+                                    <i class="fas fa-bookmark"></i>
+                                    Categorias
+                                </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Request.RawUrl.Contains("Listing") == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/Admin/Listings">
+                                    <i class="fas fa-suitcase"></i>
+                                    Puestos de Trabajo <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin/Listings">
+                                    <i class="fas fa-suitcase"></i>
+                                    Puestos de Trabajo
+                                </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Request.RawUrl.Contains("Settings") == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/Admin/Settings">
+                                    <i class="fas fa-sliders-h"></i>
+                                    Ajustes de Home Page <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Admin/Settings">
+                                    <i class="fas fa-sliders-h"></i>
+                                    Ajustes de Home Page
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+        <div class="container" style="padding-top: 30px;">
+            @RenderBody()
+            <hr />
+        </div>
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Empleate</p>
+        </footer>
+    </main>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

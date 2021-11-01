@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Jobweb.Models.PuestoTrabajo>
+
+@{
+    ViewBag.Title = "Listings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Puestos de trabajo</h2>
+
+<table class="table table-hover" style="margin-top: 20px;">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idCompañia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.posicion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ubicacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idCategoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.aplicar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaPublicacion)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idCompañia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.posicion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ubicacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idCategoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.aplicar)
+                </td>
+                <td>
+                    @if (item.estado == true)
+                    {
+                        <i class="fas fa-check-circle fa-lg" style="color: green;"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaPublicacion)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "EditListing", new { id = item.id }, new { @class = "btn btn-warning", style = "margin: 4px;" })
+                    @Html.ActionLink("Eliminar", "DeleteListing", new { id = item.id }, new { @class = "btn btn-danger aDelete", style = "margin: 4px;" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        $(".aDelete").click(function (event) {
+            if (!confirm('¿Esta seguro que desea eliminar?')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+}
